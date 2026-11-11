@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuizGenerateRequest {
-    private long materialId;
-    private Integer numberOfQuestions;
+    private Long materialId;
+    private String materialContent;
+    private String subject;
+    private Integer questionCount;
+    private String difficulty;
 }

@@ -1,11 +1,11 @@
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Optional
 
 class QuizRequest(BaseModel):
     material: str = Field(..., description="Study material text")
-    questionCount: int = Field(default=5, ge=1, le=20, description="Number of questions from 1 to 20")
-    difficulty: str = Field(default="medium", description="Difficulty level")
-
+    subject: Optional[str] = Field(default=None, description="Subject or topic")
+    questionCount: int = Field(default=5, ge=1, le=20)
+    difficulty: str = Field(default="medium")
 
 class QuestionResponse(BaseModel):
     question: str

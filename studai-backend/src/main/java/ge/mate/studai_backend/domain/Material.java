@@ -24,10 +24,10 @@ public class Material {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false, columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String subject;
 
     @Column(name = "created_at", nullable = false, updatable = false)

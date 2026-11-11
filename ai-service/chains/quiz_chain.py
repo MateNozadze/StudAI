@@ -13,8 +13,10 @@ def get_quiz_chain():
     llm = ChatOllama(
         model=settings.model_name,
         temperature=0.7,
+        n_gpu_layers = 0,
         num_ctx=4096,
         num_predict=2048,
+        n_ctx = 2048,
     )
     
     parser = PydanticOutputParser(pydantic_object=QuizOutputList)

@@ -28,12 +28,14 @@ public class AIServiceImpl implements AIService {
     private String aiServiceUrl;
 
     @Override
-    public List<QuestionResponse> generateQuizQuestions(String materialContent, int questionCount) {
+    public List<QuestionResponse> generateQuizQuestions(String materialContent,String subject, int questionCount, String difficulty) {
         String url = aiServiceUrl + "/api/ai/generate-quiz";
 
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("material", materialContent);
+        requestBody.put("material", materialContent); // პითონი ელოდება "material"-ს
+        requestBody.put("subject", subject);           // პითონი ელოდება "subject"-ს
         requestBody.put("questionCount", questionCount);
+        requestBody.put("difficulty", difficulty != null ? difficulty : "medium");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -51,6 +53,7 @@ public class AIServiceImpl implements AIService {
             return response != null ? response : List.of();
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Failed to generate quiz from AI service: " + e.getMessage());
         }
     }
