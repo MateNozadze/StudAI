@@ -1,5 +1,5 @@
 from typing import Dict, Any
-from ...chains.quiz_chain import get_quiz_chain
+from chains.quiz_chain import get_quiz_chain
 from .state import StudyState
 
 def analyze_material_node(state: StudyState) -> Dict[str, Any]:
