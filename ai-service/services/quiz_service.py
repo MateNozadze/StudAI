@@ -1,8 +1,6 @@
-from httpcore import request
-
 from models.schemas import QuizRequest, QuestionResponse
 from typing import List
-from agents.study_agent.graph import study_graph  
+from agents.study_agent.graph import study_graph
 
 class QuizService:
     def __init__(self):
@@ -10,28 +8,27 @@ class QuizService:
 
     def generate_quiz(self, request: QuizRequest) -> List[QuestionResponse]:
         """
-        Generates a quiz based on the provided study material and question.
+        Generates a quiz based on the provided study material and question count.
         """
-
         initial_state = {
-            "material_content": request.material,
-            "messages": [],
-            "question_count": request.questionCount,
-            "quiz_data": None,
-            "current_step": "started"
+            "material": request.material,
+            "subject": request.subject,
+            "questionCount": request.questionCount,
+            "difficulty": request.difficulty,
+            "questions": []
         }
         
         print("--- [Service] Running Study Graph Agent ---")
         
-        final_state = study_graph.invoke(initial_state)
+        final_state = study_graph.run(initial_state)
 
-        quiz_data = final_state.get("quiz_data")
+        questions = final_state.get("questions", [])
         
-        if not quiz_data:
-            raise ValueError("Agent failed to generate quiz data.")
+        if not questions:
+            raise ValueError("Agent failed to generate quiz questions.")
         
-        return quiz_data.get("questions", [])
-    
+        return questions
+
 
 def generate_quiz_with_agent(request: QuizRequest):
     return quiz_service.generate_quiz(request)

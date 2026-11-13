@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>სამუშაო სივრცე - StudyPilot AI</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-body">
+
+    <header class="navbar">
+        <div class="container nav-content">
+            <a href="dashboard.html" class="brand-logo">StudyPilot AI</a>
+            <div class="nav-actions">
+                <button type="button" id="logoutBtn" class="btn-outline">გასვლა</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container dashboard-main">
+        <!-- მასალის ატვირთვის სექცია -->
+        <div class="dashboard-card" id="uploadSection">
+            <h2>სასწავლო მასალის ანალიზი და ქვიზი</h2>
+            <p class="section-desc">ჩააკოპირე კონსპექტი ან ატვირთე მასალა. AI შექმნის პერსონალიზებულ ტესტს, რომელიც შეინახება შენს სიაში.</p>
+            
+            <form id="quizForm">
+                <div class="form-group">
+                    <label for="materialTitle">ქვიზის სათაური / თემა</label>
+                    <input type="text" id="materialTitle" class="form-control" placeholder="მაგ: მონაცემთა ბაზების ლექცია 1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="questionCount">კითხვების რაოდენობა</label>
+                    <select id="questionCount" class="form-control">
+                        <option value="1">1 კითხვა</option>
+                        <option value="2" selected>2 კითხვა</option>
+                        <option value="3">3 კითხვა</option>
+                        <option value="5">5 კითხვა</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="materialText">ლექციის ჩანაწერები ან ტექსტი</label>
+                    <textarea id="materialText" class="form-control" rows="5" placeholder="ჩააკოპირე სასწავლო მასალა აქ..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="fileUpload">ან ატვირთე ფაილი (PDF / TXT)</label>
+                    <input type="file" id="fileUpload" class="form-control-file" accept=".pdf,.txt">
+                </div>
+
+                <button type="submit" id="generateBtn" class="btn-solid">ქვიზის გენერაცია 🚀</button>
+            </form>
+        </div>
+
+        <!-- გენერირებული ქვიზების სია (ისტორია) -->
+        <div class="dashboard-card" id="quizzesListSection">
+            <h2>ჩემი გენერირებული ქვიზები</h2>
+            <p class="section-desc">აირჩიე ქვიზი სიიდან, რომ ნახო კითხვები და გაიარო ტესტი.</p>
+            <div id="quizzesContainer" class="quizzes-grid">
+                <!-- აქ დინამიკურად ჩაჯდება ქვიზების ბარათები -->
+                <p class="empty-text">ჯერ არ გაქვს გენერირებული ქვიზები.</p>
+            </div>
+        </div>
+
+        <!-- კონკრეტული ქვიზის კითხვების ხედი (თავიდან დამალულია) -->
+        <div class="dashboard-card" id="singleQuizView" style="display: none;">
+            <button type="button" id="backToListBtn" class="btn-outline" style="margin-bottom: 20px;">← უკან სივრცეში</button>
+            <h2 id="activeQuizTitle">ქვიზის სათაური</h2>
+            <div id="activeQuizQuestions"></div>
+        </div>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

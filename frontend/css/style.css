@@ -1,0 +1,541 @@
+:root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --danger: #ef4444;
+    --success: #10b981;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+/* Auth Layout (Login & Register) */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.auth-card {
+    background: var(--card-bg);
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 32px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    border: 1px solid var(--border-color);
+}
+
+.brand-logo {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-main);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-primary:active {
+    transform: scale(0.99);
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+/* პაროლის ველი და ხილვადობის ღილაკი */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper .form-control {
+    padding-right: 40px;
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+    padding: 0;
+    line-height: 1;
+}
+
+.toggle-password:hover {
+    color: #111;
+}
+
+/* შეტყობინებები ფორმის შიგნით */
+.alert {
+    display: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.alert-error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #f87171;
+}
+
+.alert-success {
+    background-color: #dcfce7;
+    color: #15803d;
+    border: 1px solid #4ade80;
+}
+
+/* ================= LANDING PAGE STYLES ================= */
+.landing-body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: system-ui, -apple-system, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ნავიგაცია */
+.navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-content {
+    padding: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 72px;
+}
+
+.navbar .brand-logo {
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2563eb;
+    margin: 0;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* ღილაკები */
+.btn-solid, .btn-outline {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-solid {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: 1px solid #2563eb;
+}
+
+.btn-solid:hover {
+    background-color: #1d4ed8;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+}
+
+.btn-outline:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
+.btn-lg {
+    padding: 14px 28px;
+    font-size: 16px;
+}
+
+/* Hero სექცია */
+.hero-section {
+    padding: 96px 0 80px;
+    text-align: center;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.badge {
+    display: inline-block;
+    background-color: #eff6ff;
+    color: #2563eb;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    border: 1px solid #dbeafe;
+}
+
+.hero-title {
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 1.2;
+    max-width: 780px;
+    margin: 0 auto 20px;
+    color: #0f172a;
+}
+
+.hero-description {
+    font-size: 18px;
+    color: #475569;
+    max-width: 640px;
+    margin: 0 auto 36px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Features სექცია */
+.features-section {
+    padding: 72px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 48px;
+    color: #0f172a;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.feature-card {
+    background-color: #ffffff;
+    padding: 32px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+}
+
+.feature-icon {
+    width: 48px;
+    height: 48px;
+    background-color: #eff6ff;
+    color: #2563eb;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 19px;
+    margin: 0 0 10px;
+    color: #0f172a;
+}
+
+.feature-card p {
+    font-size: 15px;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Footer */
+.landing-footer {
+    border-top: 1px solid #e2e8f0;
+    padding: 32px 0;
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+    background-color: #ffffff;
+    margin-top: 40px;
+}
+
+@media (max-width: 640px) {
+    .hero-title { font-size: 32px; }
+    .hero-description { font-size: 16px; }
+}
+
+
+
+@keyframes smoothGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+body, .landing-body {
+    background: linear-gradient(-45deg, #52eeeb, #006cae, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: smoothGradient 15s ease infinite;
+    color: #ffffff;
+    font-family: system-ui, -apple-system, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+
+
+/* ================= DASHBOARD STYLES ================= */
+.dashboard-body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: system-ui, -apple-system, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.dashboard-main {
+    padding: 40px 24px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.dashboard-card {
+    background-color: #ffffff;
+    padding: 32px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    margin-bottom: 24px;
+}
+
+.dashboard-card h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #0f172a;
+}
+
+.section-desc {
+    color: #64748b;
+    font-size: 15px;
+    margin-bottom: 24px;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-control-file {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #f1f5f9;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #334155;
+    box-sizing: border-box;
+}
+
+/* ================= DASHBOARD QUIZ LIST & CARD STYLES ================= */
+.quizzes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.quiz-item-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quiz-item-card:hover {
+    border-color: #2563eb;
+    background-color: #f1f5f9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+
+.quiz-card-content h3 {
+    margin: 0 0 6px 0;
+    font-size: 17px;
+    color: #0f172a;
+}
+
+.quiz-card-content p {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.quiz-badge {
+    display: inline-block;
+    background-color: #eff6ff;
+    color: #2563eb;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.empty-text {
+    color: #64748b;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.quiz-question-box {
+    background-color: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-top: 16px;
+}
+
+.quiz-options {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 12px 0 0 0;
+}
+
+.quiz-options li {
+    padding: 8px 12px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
