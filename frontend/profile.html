@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPilot AI - მომხმარებლის პროფილი</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-body">
+    <div id="header-placeholder"></div>
+
+    <main class="profile-container">
+        <!-- შეტყობინებების ბლოკი -->
+        <div id="alertBox" class="alert"></div>
+
+        <!-- მომხმარებლის მთავარი ბარათი -->
+        <section class="profile-header-card">
+            <div class="avatar-circle" id="userAvatar">U</div>
+            <div class="user-main-info">
+                <h1 id="displayName">იტვირთება...</h1>
+                <p id="displayEmail" class="text-muted">---</p>
+                <span class="badge" id="userRole">სტუდენტი</span>
+            </div>
+        </section>
+
+        <!-- სტატისტიკის ბარათები -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">შექმნილი ქვიზები</span>
+                <h2 class="stat-value" id="statQuizzes">0</h2>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">ატვირთული მასალა</span>
+                <h2 class="stat-value" id="statMaterials">0</h2>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">საშუალო შედეგი</span>
+                <h2 class="stat-value" id="statAvgScore">0%</h2>
+            </div>
+        </section>
+
+        <!-- პროფილის რედაქტირების ფორმა -->
+        <section class="dashboard-card" style="margin-bottom: 0;">
+            <h2>პროფილის რედაქტირება</h2>
+            <p class="section-desc">განაახლეთ თქვენი პირადი მონაცემები ან შეცვალეთ პაროლი.</p>
+            <form id="updateProfileForm">
+                <div class="form-group">
+                    <label for="usernameInput">სახელი / მომხმარებელი</label>
+                    <input type="text" id="usernameInput" class="form-control" required placeholder="შეიყვანეთ სახელი">
+                </div>
+
+                <div class="form-group">
+                    <label for="emailInput">ელ-ფოსტა</label>
+                    <input type="email" id="emailInput" class="form-control" required placeholder="name@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordInput">ახალი პაროლი (არასავალდებულო)</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="passwordInput" class="form-control" placeholder="დატოვეთ ცარიელი, თუ არ ცვლით">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="saveBtn">ცვლილებების შენახვა</button>
+            </form>
+        </section>
+
+        <!-- საშიში ზონა (ანგარიშის წაშლა) -->
+        <section class="danger-zone">
+            <div>
+                <h3>ანგარიშის წაშლა</h3>
+                <p>ანგარიშის წაშლის შემდეგ ყველა ქვიზი და მასალა სამუდამოდ წაიშლება.</p>
+            </div>
+            <button type="button" id="deleteAccountBtn" class="btn-danger">ანგარიშის წაშლა</button>
+        </section>
+    </main>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

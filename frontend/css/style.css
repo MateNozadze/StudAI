@@ -16,14 +16,30 @@
     padding: 0;
 }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    line-height: 1.6;
+/* ძირითადი ფონი (მოძრავი გრადიენტით, რომელიც გქონდა გაწერილი) */
+@keyframes smoothGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-/* Auth Layout (Login & Register) */
+body, .landing-body, .dashboard-body {
+    background: linear-gradient(-45deg, #52eeeb, #006cae, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: smoothGradient 15s ease infinite;
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ================= AUTH LAYOUT ================= */
 .auth-wrapper {
     min-height: 100vh;
     display: flex;
@@ -48,6 +64,7 @@ body {
     font-weight: 800;
     color: var(--primary);
     margin-bottom: 8px;
+    text-decoration: none;
 }
 
 .auth-subtitle {
@@ -75,6 +92,7 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 10px;
     font-size: 15px;
+    background-color: #ffffff;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -84,6 +102,24 @@ body {
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
 
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-control-file {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #f1f5f9;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #334155;
+}
+
+/* ღილაკები */
 .btn {
     display: inline-block;
     width: 100%;
@@ -110,6 +146,50 @@ body {
     transform: scale(0.99);
 }
 
+.btn-solid, .btn-outline {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-solid {
+    background-color: var(--primary);
+    color: #ffffff;
+    border: 1px solid var(--primary);
+}
+
+.btn-solid:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+}
+
+.btn-outline:hover {
+    background-color: #f1f5f9;
+    color: var(--text-main);
+}
+
+.btn-lg {
+    padding: 14px 28px;
+    font-size: 16px;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+/* Auth Footer & Elements */
 .auth-footer {
     text-align: center;
     margin-top: 24px;
@@ -126,7 +206,7 @@ body {
 .auth-footer a:hover {
     text-decoration: underline;
 }
-/* პაროლის ველი და ხილვადობის ღილაკი */
+
 .password-wrapper {
     position: relative;
     display: flex;
@@ -135,7 +215,6 @@ body {
 
 .password-wrapper .form-control {
     padding-right: 40px;
-    width: 100%;
 }
 
 .toggle-password {
@@ -154,7 +233,6 @@ body {
     color: #111;
 }
 
-/* შეტყობინებები ფორმის შიგნით */
 .alert {
     display: none;
     padding: 12px;
@@ -176,43 +254,21 @@ body {
     border: 1px solid #4ade80;
 }
 
-/* ================= LANDING PAGE STYLES ================= */
-.landing-body {
-    background-color: #f8fafc;
-    color: #0f172a;
-    font-family: system-ui, -apple-system, sans-serif;
-    margin: 0;
-    line-height: 1.6;
-}
-
-.container {
-    margin: 0 auto;
-    padding: 0 24px;
-}
-
-/* ნავიგაცია */
+/* ================= LANDING PAGE ================= */
 .navbar {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-color);
     position: sticky;
     top: 0;
     z-index: 100;
 }
 
 .nav-content {
-    padding: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 72px;
-}
-
-.navbar .brand-logo {
-    text-decoration: none;
-    font-size: 22px;
-    font-weight: 700;
-    color: #2563eb;
-    margin: 0;
 }
 
 .nav-actions {
@@ -221,55 +277,15 @@ body {
     align-items: center;
 }
 
-/* ღილაკები */
-.btn-solid, .btn-outline {
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-solid {
-    background-color: #2563eb;
-    color: #ffffff;
-    border: 1px solid #2563eb;
-}
-
-.btn-solid:hover {
-    background-color: #1d4ed8;
-}
-
-.btn-outline {
-    background-color: transparent;
-    color: #334155;
-    border: 1px solid #cbd5e1;
-}
-
-.btn-outline:hover {
-    background-color: #f1f5f9;
-    color: #0f172a;
-}
-
-.btn-lg {
-    padding: 14px 28px;
-    font-size: 16px;
-}
-
-/* Hero სექცია */
 .hero-section {
     padding: 96px 0 80px;
     text-align: center;
-    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
 }
 
 .badge {
     display: inline-block;
     background-color: #eff6ff;
-    color: #2563eb;
+    color: var(--primary);
     padding: 6px 14px;
     border-radius: 999px;
     font-size: 13px;
@@ -284,12 +300,11 @@ body {
     line-height: 1.2;
     max-width: 780px;
     margin: 0 auto 20px;
-    color: #0f172a;
 }
 
 .hero-description {
     font-size: 18px;
-    color: #475569;
+    color: #334155;
     max-width: 640px;
     margin: 0 auto 36px;
 }
@@ -301,7 +316,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* Features სექცია */
 .features-section {
     padding: 72px 0;
 }
@@ -311,7 +325,6 @@ body {
     font-size: 30px;
     font-weight: 700;
     margin-bottom: 48px;
-    color: #0f172a;
 }
 
 .features-grid {
@@ -321,10 +334,10 @@ body {
 }
 
 .feature-card {
-    background-color: #ffffff;
+    background-color: var(--card-bg);
     padding: 32px;
     border-radius: 16px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-color);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -338,7 +351,7 @@ body {
     width: 48px;
     height: 48px;
     background-color: #eff6ff;
-    color: #2563eb;
+    color: var(--primary);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -349,68 +362,25 @@ body {
 .feature-card h3 {
     font-size: 19px;
     margin: 0 0 10px;
-    color: #0f172a;
 }
 
 .feature-card p {
     font-size: 15px;
-    color: #64748b;
+    color: var(--text-muted);
     margin: 0;
 }
 
-/* Footer */
 .landing-footer {
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--border-color);
     padding: 32px 0;
     text-align: center;
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 14px;
-    background-color: #ffffff;
+    background-color: var(--card-bg);
     margin-top: 40px;
 }
 
-@media (max-width: 640px) {
-    .hero-title { font-size: 32px; }
-    .hero-description { font-size: 16px; }
-}
-
-
-
-@keyframes smoothGradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-
-body, .landing-body {
-    background: linear-gradient(-45deg, #52eeeb, #006cae, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: smoothGradient 15s ease infinite;
-    color: #ffffff;
-    font-family: system-ui, -apple-system, sans-serif;
-    margin: 0;
-    line-height: 1.6;
-    min-height: 100vh;
-}
-
-
-
-/* ================= DASHBOARD STYLES ================= */
-.dashboard-body {
-    background-color: #f8fafc;
-    color: #0f172a;
-    font-family: system-ui, -apple-system, sans-serif;
-    margin: 0;
-    line-height: 1.6;
-}
-
+/* ================= DASHBOARD & QUIZ STYLES ================= */
 .dashboard-main {
     padding: 40px 24px;
     max-width: 800px;
@@ -418,10 +388,10 @@ body, .landing-body {
 }
 
 .dashboard-card {
-    background-color: #ffffff;
+    background-color: var(--card-bg);
     padding: 32px;
     border-radius: 16px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-color);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
     margin-bottom: 24px;
 }
@@ -429,34 +399,14 @@ body, .landing-body {
 .dashboard-card h2 {
     margin-top: 0;
     font-size: 24px;
-    color: #0f172a;
 }
 
 .section-desc {
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 15px;
     margin-bottom: 24px;
 }
 
-textarea.form-control {
-    resize: vertical;
-    min-height: 120px;
-}
-
-.form-control-file {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #f1f5f9;
-    border: 1px dashed #cbd5e1;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    color: #334155;
-    box-sizing: border-box;
-}
-
-/* ================= DASHBOARD QUIZ LIST & CARD STYLES ================= */
 .quizzes-grid {
     display: flex;
     flex-direction: column;
@@ -465,11 +415,10 @@ textarea.form-control {
 }
 
 .quiz-item-card {
-    background-color: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 20px;
-    cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
     justify-content: space-between;
@@ -477,65 +426,244 @@ textarea.form-control {
 }
 
 .quiz-item-card:hover {
-    border-color: #2563eb;
-    background-color: #f1f5f9;
+    border-color: var(--primary);
+    background-color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+
+.quiz-card-content {
+    flex-grow: 1;
+    cursor: pointer;
 }
 
 .quiz-card-content h3 {
     margin: 0 0 6px 0;
     font-size: 17px;
-    color: #0f172a;
 }
 
 .quiz-card-content p {
     margin: 0 0 10px 0;
     font-size: 13px;
-    color: #64748b;
+    color: var(--text-muted);
+}
+
+.quiz-card-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 
 .quiz-badge {
     display: inline-block;
     background-color: #eff6ff;
-    color: #2563eb;
+    color: var(--primary);
     padding: 4px 10px;
     border-radius: 6px;
     font-size: 12px;
     font-weight: 600;
 }
 
-.btn-sm {
-    padding: 8px 16px;
-    font-size: 13px;
-    white-space: nowrap;
-}
-
 .empty-text {
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 14px;
     font-style: italic;
 }
 
+/* კითხვებისა და ვარიანტების ინტერაქტიული სტილები (სტრიქონებად დალაგება) */
 .quiz-question-box {
-    background-color: #f8fafc;
-    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 24px;
     border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    margin-top: 16px;
+    border: 1px solid var(--border-color);
+    margin-top: 20px;
 }
 
 .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
     list-style-type: none;
     padding-left: 0;
-    margin: 12px 0 0 0;
 }
 
-.quiz-options li {
-    padding: 8px 12px;
+.option-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
     background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    margin-bottom: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
     font-size: 14px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.option-label:hover {
+    background-color: #f1f5f9;
+    border-color: var(--primary);
+}
+
+.option-label input[type="radio"] {
+    cursor: pointer;
+}
+
+@media (max-width: 640px) {
+    .hero-title {
+        font-size: 32px;
+    }
+    .hero-description {
+        font-size: 16px;
+    }
+}
+
+
+
+
+
+/*=====================PROFILE PAGE=====================*/
+
+/*=====================PROFILE PAGE=====================*/
+.profile-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.profile-header-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+}
+
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), #006cae);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 800;
+    color: #ffffff;
+    flex-shrink: 0;
+    box-shadow: 0 8px 16px -4px rgba(79, 70, 229, 0.3);
+}
+
+.user-main-info h1 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.user-main-info .text-muted {
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+.user-main-info .badge {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+/* სტატისტიკის ბარათები */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+}
+
+.stat-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+}
+
+.stat-label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 800;
+    margin-top: 6px;
+    color: var(--primary);
+}
+
+/* საშიში ზონა (ანგარიშის წაშლა) */
+.danger-zone {
+    background-color: #ffffff;
+    border: 1px solid #fecaca;
+    border-radius: 16px;
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.05);
+}
+
+.danger-zone h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #b91c1c;
+    margin-bottom: 4px;
+}
+
+.danger-zone p {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+.btn-danger:active {
+    transform: scale(0.99);
+}
+
+@media (max-width: 640px) {
+    .profile-header-card,
+    .danger-zone {
+        flex-direction: column;
+        text-align: center;
+    }
 }

@@ -57,7 +57,8 @@ public class QuizServiceImpl implements QuizService {
             quiz.setTitle("Quiz for: " + materialEntity.getTitle());
             quiz.setMaterial(materialEntity);
         } else {
-            quiz.setTitle("Generated Custom Quiz");
+            quiz.setTitle(request.getSubject() != null && !request.getSubject().isBlank()
+                    ? request.getSubject() : "Generated Custom Quiz");
         }
 
         List<Question> questions = generatedQuestions.stream().map(dto -> {
@@ -65,6 +66,7 @@ public class QuizServiceImpl implements QuizService {
             q.setQuestion(dto.getQuestion());
             q.setOptions(dto.getOptions());
             q.setCorrectAnswer(dto.getCorrectAnswer());
+            q.setExplanation(dto.getExplanation());
             q.setQuiz(quiz);
             return q;
         }).collect(Collectors.toList());

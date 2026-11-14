@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ჩემი ქვიზები - StudyPilot AI</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-body">
+    <div id="header-placeholder"></div>
+
+    <main class="container dashboard-main">
+        <!-- ქვიზების სიის სექცია -->
+        <div class="dashboard-card" id="quizzesListSection">
+            <h2>ჩემი გენერირებული ქვიზები</h2>
+            <p class="section-desc">აირჩიე ქვიზი სიიდან, რომ ნახო კითხვები და გაიარო ტესტი.</p>
+            <div id="quizzesContainer" class="quizzes-grid">
+                <p class="empty-text">ჯერ არ გაქვს გენერირებული ქვიზები.</p>
+            </div>
+        </div>
+
+        <!-- კონკრეტული ქვიზის კითხვების ხედი (თავიდან დამალულია) -->
+        <div class="dashboard-card" id="singleQuizView" style="display: none;">
+            <button type="button" id="backToListBtn" class="btn-outline" style="margin-bottom: 20px;">← უკან სივრცეში</button>
+            <h2 id="activeQuizTitle">ქვიზის სათაური</h2>
+            <div id="activeQuizQuestions"></div>
+        </div>
+    </main>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/quizzes.js"></script>
+</body>
+</html>

@@ -10,7 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class AIServiceImpl implements AIService {
 
@@ -29,7 +27,7 @@ public class AIServiceImpl implements AIService {
 
     @Override
     public List<QuestionResponse> generateQuizQuestions(String materialContent,String subject, int questionCount, String difficulty) {
-        String url = aiServiceUrl + "/api/ai/generate-quiz";
+        String url = aiServiceUrl + "/api/quiz/generate";
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("material", materialContent); // პითონი ელოდება "material"-ს

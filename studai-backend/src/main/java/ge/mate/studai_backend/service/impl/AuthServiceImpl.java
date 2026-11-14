@@ -1,12 +1,12 @@
 package ge.mate.studai_backend.service.impl;
 
+import ge.mate.studai_backend.config.JwtTokenProvider;
 import ge.mate.studai_backend.domain.User;
 import ge.mate.studai_backend.dto.request.LoginRequest;
 import ge.mate.studai_backend.dto.request.RegisterRequest;
 import ge.mate.studai_backend.dto.response.AuthResponse;
 import ge.mate.studai_backend.repository.UserRepository;
 import ge.mate.studai_backend.service.AuthService;
-import ge.mate.studai_backend.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+    private final JwtTokenProvider tokenProvider;
 
     @Override
     public AuthResponse register(RegisterRequest request) {
@@ -33,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
 
-        String token = jwtService.generateToken(user.getEmail());
+        String token = tokenProvider.generateToken(user.getEmail());
 
         AuthResponse response = new AuthResponse();
         response.setToken(token);
@@ -49,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Invalid email or password");
         }
 
-        String token = jwtService.generateToken(user.getEmail());
+        String token = tokenProvider.generateToken(user.getEmail());
         AuthResponse response = new AuthResponse();
         response.setToken(token);
         return response;

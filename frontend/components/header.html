@@ -1,0 +1,20 @@
+<header class="navbar">
+    <div class="container nav-content">
+        <!-- ლოგო ყოველთვის აბრუნებს ინდექსზე (index.html) -->
+        <a href="index.html" class="brand-logo" style="margin-bottom: 0;">StudyPilot AI</a>
+        
+        <!-- ავტორიზებული მომხმარებლის მენიუ -->
+        <nav class="nav-actions" id="authNav" style="display: none;">
+            <!-- მთავარი ღილაკი აუცილებლად მიდის dashboard.html-ზე -->
+            <a href="dashboard.html" class="btn-outline btn-sm" data-page="dashboard.html">სამუშაო სივრცე</a>
+            <a href="profile.html" class="btn-outline btn-sm" data-page="profile.html">პროფილი</a>
+            <button type="button" id="logoutBtn" class="btn-outline btn-sm">გასვლა</button>
+        </nav>
+
+        <!-- არაავტორიზებული მომხმარებლის მენიუ -->
+        <nav class="nav-actions" id="guestNav" style="display: none;">
+            <a href="login.html" class="btn-outline" data-page="login.html">შესვლა</a>
+            <a href="register.html" class="btn-solid" data-page="register.html">რეგისტრაცია</a>
+        </nav>
+    </div>
+</header>

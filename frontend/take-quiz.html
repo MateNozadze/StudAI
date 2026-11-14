@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ტესტის გავლა - StudyPilot AI</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-body">
+    <div id="header-placeholder"></div>
+
+    <main class="container dashboard-main">
+        <div class="dashboard-card">
+            <button type="button" onclick="window.location.href='quizzes.html'" class="btn-outline" style="margin-bottom: 20px;">← უკან სივრცეში</button>
+            <h2 id="quizTitle">იტვირთება ქვიზი...</h2>
+            
+            <form id="submitQuizForm">
+                <div id="questionsContainer"></div>
+                <button type="submit" id="submitQuizBtn" class="btn-solid" style="margin-top: 24px; display: none;">პასუხების გაგზავნა 🎯</button>
+            </form>
+
+            <div id="resultContainer" style="margin-top: 24px;"></div>
+        </div>
+    </main>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/take-quiz.js"></script>
+</body>
+</html>
