@@ -59,13 +59,36 @@ document.addEventListener("DOMContentLoaded", async () => {
             optionsHtml += `</ul>`;
 
             questionBox.innerHTML = `
-                <p><strong>კითხვა ${qIndex + 1}:</strong> ${q.text}</p>
+                <p><strong>კითხვა ${qIndex + 1}:</strong> ${q.question}</p>
                 ${optionsHtml}
             `;
             questionsContainer.appendChild(questionBox);
         });
 
         submitQuizBtn.style.display = "block";
+
+        // თუ ტესტი უკვე გავლილია: ვაჩვენებთ წინა შედეგს და ფორმას ვმალავთ, სანამ "ხელახლა გავლას" არ დააჭერს
+        const lastRes = await fetch(`http://localhost:8080/api/quizzes/${quizId}/last-attempt`, {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+        if (lastRes.status === 200) {
+            const last = await lastRes.json();
+            questionsContainer.style.display = "none";
+            submitQuizBtn.style.display = "none";
+            resultContainer.innerHTML = `
+                <div class="dashboard-card" style="text-align: center;">
+                    <h3>ეს ტესტი უკვე გავლილი გაქვს</h3>
+                    <p style="font-size: 18px; font-weight: bold;">ბოლო შედეგი: ${last.score} / ${last.totalQuestions} (${Math.round(last.percentage)}%)</p>
+                    <p style="color: var(--text-muted);">${new Date(last.completedAt).toLocaleString('ka-GE')}</p>
+                    <button type="button" id="retakeBtn" class="btn-solid" style="margin-top: 16px;">ხელახლა გავლა 🔄</button>
+                </div>
+            `;
+            document.getElementById("retakeBtn").addEventListener("click", () => {
+                resultContainer.innerHTML = "";
+                questionsContainer.style.display = "block";
+                submitQuizBtn.style.display = "block";
+            });
+        }
 
     } catch (error) {
         console.error(error);
@@ -107,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             resultContainer.innerHTML = `
                 <div class="dashboard-card" style="background: #f0fdf4; border-color: #bbf7d0; text-align: center;">
                     <h3 style="color: #16a34a; margin-bottom: 8px;">ტესტი დასრულდა! 🎉</h3>
-                    <p style="font-size: 18px; font-weight: bold;">შენი ქულა: ${result.score !== undefined ? result.score : 'არ არის მითითებული'}</p>
+                    <p style="font-size: 18px; font-weight: bold;">შენი ქულა: ${result.correctAnswers} / ${result.totalQuestions} (${Math.round(result.scorePercentage)}%)</p>
                     <p style="color: var(--text-muted); margin-top: 8px;">${result.message || ''}</p>
                     <button type="button" class="btn-solid" onclick="window.location.href='quizzes.html'" style="margin-top: 16px;">ქვიზების სიაში დაბრუნება</button>
                 </div>

@@ -8,4 +8,5 @@ public interface UserService {
     void updateUser(Long id, User request, String currentUserEmail);
     void deleteUser(Long id, String currentUserEmail);
     UserProfileResponse getUserProfileDto(Long userId);
+    UserProfileResponse getProfileByEmail(String email);
 }

@@ -17,6 +17,11 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping("/me")
+    public ResponseEntity<UserProfileResponse> getMe(Authentication authentication) {
+        return ResponseEntity.ok(userService.getProfileByEmail(authentication.getName()));
+    }
+
     @GetMapping("/profile/{userid}")
     public ResponseEntity<UserProfileResponse> getUserProfile(@PathVariable("userid") Long userId) {
         UserProfileResponse userProfile = userService.getUserProfileDto(userId);

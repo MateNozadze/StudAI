@@ -65,16 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const newQuizFromBackend = await response.json();
             console.log("მიღებულია პასუხი სერვერიდან:", newQuizFromBackend);
 
-            // ვინახავთ localStorage-ში, რომ quizzes.html-მა დაინახოს
-            let userQuizzes = JSON.parse(localStorage.getItem('userQuizzes')) || [];
-            userQuizzes.push({
-                id: newQuizFromBackend.id || Date.now(),
-                title: newQuizFromBackend.title || title,
-                date: new Date().toLocaleDateString('ka-GE'),
-                questions: newQuizFromBackend.questions || []
-            });
-            localStorage.setItem('userQuizzes', JSON.stringify(userQuizzes));
-
             alert('ქვიზი წარმატებით დაგენერირდა!');
             window.location.href = 'quizzes.html';
 

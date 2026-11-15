@@ -6,9 +6,15 @@ import ge.mate.studai_backend.domain.Quiz;
 import ge.mate.studai_backend.dto.request.QuizGenerateRequest;
 import ge.mate.studai_backend.dto.request.SubmitQuizRequest;
 import ge.mate.studai_backend.dto.response.QuestionResponse;
+import ge.mate.studai_backend.dto.response.AttemptResponse;
 import ge.mate.studai_backend.dto.response.QuizResponse;
 import ge.mate.studai_backend.dto.response.QuizResultResponse;
 import ge.mate.studai_backend.repository.MaterialRepository;
+import ge.mate.studai_backend.domain.QuizAttempt;
+import ge.mate.studai_backend.domain.User;
+import ge.mate.studai_backend.repository.QuizAttemptRepository;
+import ge.mate.studai_backend.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import ge.mate.studai_backend.repository.QuizRepository;
 import ge.mate.studai_backend.service.AIService;
 import ge.mate.studai_backend.service.QuizService;
@@ -29,6 +35,13 @@ public class QuizServiceImpl implements QuizService {
     private final QuizRepository quizRepository;
     private final MaterialRepository materialRepository;
     private final AIService aiService;
+    private final UserRepository userRepository;
+    private final QuizAttemptRepository attemptRepository;
+
+    private User currentUser() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+    }
     @Override
     public QuizResponse generateAndSaveQuiz(QuizGenerateRequest request) {
         String materialContent;
@@ -52,6 +65,7 @@ public class QuizServiceImpl implements QuizService {
         );
 
         Quiz quiz = new Quiz();
+        quiz.setUser(currentUser());
         quiz.setDifficulty(request.getDifficulty() != null ? request.getDifficulty() : "medium");
         if (materialEntity != null) {
             quiz.setTitle("Quiz for: " + materialEntity.getTitle());
@@ -83,6 +97,38 @@ public class QuizServiceImpl implements QuizService {
         return response;
     }
 
+    private AttemptResponse toAttemptDto(QuizAttempt a) {
+        int total = a.getQuiz().getQuestions().size();
+        double pct = total > 0 ? (double) a.getScore() / total * 100 : 0.0;
+        Map<Long, String> answers = a.getAnswers() == null ? Map.of() : new HashMap<>(a.getAnswers());
+        return new AttemptResponse(a.getQuiz().getId(), a.getQuiz().getTitle(), a.getScore(), total, pct, a.getCompletedAt(), answers);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AttemptResponse> getMyAttempts() {
+        return attemptRepository.findByUserIdOrderByCompletedAtDesc(currentUser().getId())
+                .stream().map(this::toAttemptDto).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AttemptResponse getLastAttempt(Long quizId) {
+        return attemptRepository.findFirstByUserIdAndQuizIdOrderByCompletedAtDesc(currentUser().getId(), quizId)
+                .map(this::toAttemptDto).orElse(null);
+    }
+
+    @Override
+    public void deleteQuiz(Long id) {
+        Quiz quiz = quizRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Quiz not found with id: " + id));
+        if (quiz.getUser() == null || !quiz.getUser().getId().equals(currentUser().getId())) {
+            throw new RuntimeException("Access Denied: not your quiz");
+        }
+        attemptRepository.deleteByQuizId(id);
+        quizRepository.delete(quiz);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public QuizResponse getQuizById(Long id) {
@@ -95,7 +141,9 @@ public class QuizServiceImpl implements QuizService {
 
         List<QuestionResponse> questionResponses = quiz.getQuestions().stream().map(question -> {
             QuestionResponse questionResponse = new QuestionResponse();
+            questionResponse.setId(question.getId());
             questionResponse.setQuestion(question.getQuestion());
+            questionResponse.setExplanation(question.getExplanation());
             questionResponse.setOptions(question.getOptions());
             questionResponse.setCorrectAnswer(question.getCorrectAnswer());
             return questionResponse;
@@ -108,7 +156,7 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public List<QuizResponse> getAllQuizzes() {
-        List<Quiz> quizzes = quizRepository.findAll();
+        List<Quiz> quizzes = quizRepository.findByUserId(currentUser().getId());
         return quizzes.stream().map(quiz -> {
             QuizResponse response = new QuizResponse();
             response.setId(quiz.getId());
@@ -116,7 +164,9 @@ public class QuizServiceImpl implements QuizService {
 
             List<QuestionResponse> questionResponses = quiz.getQuestions().stream().map(q->{
                 QuestionResponse questionResponse = new QuestionResponse();
+                questionResponse.setId(q.getId());
                 questionResponse.setQuestion(q.getQuestion());
+                questionResponse.setExplanation(q.getExplanation());
                 questionResponse.setOptions(q.getOptions());
                 questionResponse.setCorrectAnswer(q.getCorrectAnswer());
                 return questionResponse;
@@ -148,6 +198,13 @@ public class QuizServiceImpl implements QuizService {
         }
 
         double percentage = totalQuestions > 0 ? ((double) correctCount / totalQuestions) * 100 : 0.0;
+
+        QuizAttempt attempt = new QuizAttempt();
+        attempt.setUser(currentUser());
+        attempt.setQuiz(quiz);
+        attempt.setScore(correctCount);
+        attempt.setAnswers(request.getAnswers());
+        attemptRepository.save(attempt);
 
         QuizResultResponse response = new QuizResultResponse();
         response.setTotalQuestions(totalQuestions);

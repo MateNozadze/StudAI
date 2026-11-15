@@ -4,6 +4,7 @@ package ge.mate.studai_backend.controller;
 import ge.mate.studai_backend.domain.Quiz;
 import ge.mate.studai_backend.dto.request.QuizGenerateRequest;
 import ge.mate.studai_backend.dto.request.SubmitQuizRequest;
+import ge.mate.studai_backend.dto.response.AttemptResponse;
 import ge.mate.studai_backend.dto.response.QuizResponse;
 import ge.mate.studai_backend.dto.response.QuizResultResponse;
 import ge.mate.studai_backend.service.QuizService;
@@ -26,6 +27,23 @@ public class QuizController {
     public ResponseEntity<QuizResponse> generateQuiz(@RequestBody QuizGenerateRequest request) {
         QuizResponse response = quizService.generateAndSaveQuiz(request);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/attempts")
+    public ResponseEntity<List<AttemptResponse>> getMyAttempts() {
+        return ResponseEntity.ok(quizService.getMyAttempts());
+    }
+
+    @GetMapping("/{id}/last-attempt")
+    public ResponseEntity<AttemptResponse> getLastAttempt(@PathVariable Long id) {
+        AttemptResponse last = quizService.getLastAttempt(id);
+        return last == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(last);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteQuiz(@PathVariable Long id) {
+        quizService.deleteQuiz(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")

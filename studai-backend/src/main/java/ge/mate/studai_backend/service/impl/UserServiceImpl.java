@@ -43,6 +43,14 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    @Transactional(readOnly = true)
+    public UserProfileResponse getProfileByEmail(String email) {
+        User u = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return new UserProfileResponse(u.getId(), u.getUsername(), u.getEmail());
+    }
+
     public UserProfileResponse getUserProfileDto(Long userId){
         User user  = getUserById(userId);
 

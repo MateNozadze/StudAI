@@ -23,6 +23,10 @@ public class Quiz {
     private String difficulty;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "material_id", nullable = true)
     private Material material;
 

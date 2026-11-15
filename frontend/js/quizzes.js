@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    renderQuizzesList();
+    renderQuizzesList(token);
 
     // უკან დაბრუნების ღილაკი სიის ხედზე
     document.getElementById('backToListBtn')?.addEventListener('click', () => {
@@ -15,11 +15,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-function renderQuizzesList() {
+async function renderQuizzesList(token = localStorage.getItem('token')) {
     const container = document.getElementById('quizzesContainer');
     if (!container) return;
 
-    let userQuizzes = JSON.parse(localStorage.getItem('userQuizzes')) || [];
+    let userQuizzes = [];
+    try {
+        const res = await fetch('http://localhost:8080/api/quizzes/all', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.status === 401 || res.status === 403) {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+            return;
+        }
+        userQuizzes = await res.json();
+    } catch (e) {
+        container.innerHTML = `<p class="empty-text">სერვერთან კავშირი ვერ მოხერხდა.</p>`;
+        return;
+    }
 
     if (userQuizzes.length === 0) {
         container.innerHTML = `<p class="empty-text">ჯერ არ გაქვს გენერირებული ქვიზები.</p>`;
@@ -28,13 +42,12 @@ function renderQuizzesList() {
 
     container.innerHTML = userQuizzes.map(quiz => `
         <div class="quiz-item-card">
-            <div class="quiz-card-content" onclick="openQuiz(${quiz.id})" style="cursor: pointer;">
+            <div class="quiz-card-content" onclick="location.href='take-quiz.html?id=${quiz.id}'" style="cursor: pointer;">
                 <h3>${quiz.title}</h3>
-                <p>შექმნილია: ${quiz.date}</p>
                 <span class="quiz-badge">კითხვები: ${quiz.questions.length}</span>
             </div>
             <div class="quiz-card-actions">
-                <button type="button" class="btn-solid btn-sm" onclick="openQuiz(${quiz.id})">გახსნა →</button>
+                <button type="button" class="btn-solid btn-sm" onclick="location.href='take-quiz.html?id=${quiz.id}'">გახსნა →</button>
                 <button type="button" class="btn-delete btn-sm" onclick="deleteQuiz(${quiz.id})">🗑️ წაშლა</button>
             </div>
         </div>
@@ -98,11 +111,16 @@ function checkQuizAnswers(quizId) {
     resultArea.textContent = `შენი შედეგი: ${score} / ${totalQuestions} სწორი პასუხი (${Math.round((score/totalQuestions)*100)}%)`;
 }
 
-function deleteQuiz(quizId) {
-    if (confirm('ნამდვილად გინდა ამ ქვიზის წაშლა?')) {
-        let userQuizzes = JSON.parse(localStorage.getItem('userQuizzes')) || [];
-        userQuizzes = userQuizzes.filter(q => q.id !== quizId);
-        localStorage.setItem('userQuizzes', JSON.stringify(userQuizzes));
-        renderQuizzesList();
+async function deleteQuiz(quizId) {
+    if (!confirm('ნამდვილად გინდა ამ ქვიზის წაშლა?')) return;
+    const token = localStorage.getItem('token');
+    const res = await fetch(`http://localhost:8080/api/quizzes/${quizId}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) {
+        alert('წაშლა ვერ მოხერხდა');
+        return;
     }
+    renderQuizzesList(token);
 }

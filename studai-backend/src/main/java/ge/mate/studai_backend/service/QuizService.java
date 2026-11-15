@@ -2,6 +2,7 @@ package ge.mate.studai_backend.service;
 
 import ge.mate.studai_backend.dto.request.QuizGenerateRequest;
 import ge.mate.studai_backend.dto.request.SubmitQuizRequest;
+import ge.mate.studai_backend.dto.response.AttemptResponse;
 import ge.mate.studai_backend.dto.response.QuizResponse;
 import ge.mate.studai_backend.dto.response.QuizResultResponse;
 
@@ -14,4 +15,10 @@ public interface QuizService {
     List<QuizResponse> getAllQuizzes();
 
     QuizResultResponse gradeQuiz(Long id, SubmitQuizRequest request);
+
+    void deleteQuiz(Long id);
+
+    List<AttemptResponse> getMyAttempts();
+
+    AttemptResponse getLastAttempt(Long quizId);
 }
