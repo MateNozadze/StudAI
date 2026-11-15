@@ -2,39 +2,56 @@ import os
 import time
 import socket
 import subprocess
+from urllib.parse import urlparse
 from contextlib import contextmanager
 
-def is_port_open(host: str = "127.0.0.1", port: int = 11434) -> bool:
+def get_ollama_host_port():
+    """OLLAMA_BASE_URL-იდან გამოაქვს host და port, რომ Docker-შიც სწორად შემოწმდეს"""
+    ollama_url = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
+    parsed = urlparse(ollama_url)
+    host = parsed.hostname or "127.0.0.1"
+    port = parsed.port or 11434
+    return host, port
+
+def is_port_open(host: str, port: int) -> bool:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.settimeout(0.5)
         return s.connect_ex((host, port)) == 0
 
 @contextmanager
 def temporary_ollama_server():
+    host, port = get_ollama_host_port()
+    
+    # თუ ვართ Docker-ში (ანუ host არ არის ლოკალური მანქანა), 
+    # არ ვცდილობთ ollama-ს სერვერის თავად გაშვებას/ჩაქრობას (ის ჰოსტზეა მუშა მდგომარეობაში).
+    is_local = host in ("127.0.0.1", "localhost", "host.docker.internal")
+    
     process = None
     started_by_us = False
 
-    if not is_port_open():
+    if is_local and not is_port_open(host, port):
         print("--- [Ollama] Starting Ollama for quiz generation... ---")
         creation_flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
-        # DEVNULL აუცილებელია, რომ Ollama-ს ლოგებმა ბუფერი არ გაჭედოს
-        process = subprocess.Popen(
-            ["ollama", "serve"],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            creationflags=creation_flags,
-        )
-        started_by_us = True
+        try:
+            process = subprocess.Popen(
+                ["ollama", "serve"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                creationflags=creation_flags,
+            )
+            started_by_us = True
 
-        # ველოდებით მაქსიმუმ 15 წამი, სანამ პორტი 11434 გაიხსნება
-        for _ in range(120):
-            if is_port_open():
-                break
-            time.sleep(0.5)
-        else:
-            if process:
-                process.terminate()
-            raise RuntimeError("Ollama server failed to start within 60 seconds.")
+            # ველოდებით მაქსიმუმ 30 წამი
+            for _ in range(60):
+                if is_port_open(host, port):
+                    break
+                time.sleep(0.5)
+            else:
+                if process:
+                    process.terminate()
+                raise RuntimeError("Ollama server failed to start within 30 seconds.")
+        except FileNotFoundError:
+            print("--- [Ollama] Warning: 'ollama' executable not found locally. Skipping auto-start. ---")
 
     try:
         yield
@@ -42,7 +59,6 @@ def temporary_ollama_server():
         if started_by_us and process:
             print("--- [Ollama] Quiz generated. Shutting down Ollama to free VRAM/RAM... ---")
             if os.name == "nt":
-                # Windows-ზე taskkill თიშავს როგორც ollama.exe-ს, ისე შვილობილ llama-server.exe პროცესს
                 subprocess.run(
                     ["taskkill", "/F", "/T", "/PID", str(process.pid)],
                     stdout=subprocess.DEVNULL,
