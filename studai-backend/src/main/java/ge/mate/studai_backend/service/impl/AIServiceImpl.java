@@ -22,7 +22,7 @@ public class AIServiceImpl implements AIService {
 
     private final RestTemplate restTemplate;
 
-    @Value("${ai.service.url:http://localhost:8000}")
+    @Value("${ai.service.url}")
     private String aiServiceUrl;
 
     @Override

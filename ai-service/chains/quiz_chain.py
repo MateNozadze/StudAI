@@ -1,3 +1,4 @@
+import os
 from typing import List
 from pydantic import BaseModel, Field
 from langchain_ollama import ChatOllama
@@ -15,6 +16,7 @@ class QuizOutputList(BaseModel):
 def get_quiz_chain():
     llm = ChatOllama(
         model=settings.model_name,
+        base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
         temperature=0.25,
         # არ ვაფიქსირებთ ხელით ფენებს (33-ს). Ollama თავად ანაწილებს VRAM-ს 6GB-ის ფარგლებში.
         num_gpu=-1,

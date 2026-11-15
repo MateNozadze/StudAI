@@ -1,0 +1,58 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: studai-db
+    environment:
+      POSTGRES_DB: studai_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  ai-service:
+    build: ./ai-service
+    container_name: studai-ai
+    ports:
+      - "8000:8000"
+    environment:
+      # კონტეინერიდან შენს კომპიუტერზე გაშვებულ Ollama-სთან წვდომა
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  backend:
+    build: ./studai-backend
+    container_name: studai-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      ai-service:
+        condition: service_started
+    environment:
+      # Docker-ის შიდა ქსელში სერვისებს სახელებით მივმართავთ (db და ai-service)
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/studai_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      APP_JWT_SECRET: ${JWT_SECRET}
+      # თუ AIServiceImpl-ში URL კონფიგურირებადია, აქედან გადავაწვდით:
+      AI_SERVICE_URL: http://ai-service:8000
+
+  frontend:
+    build: ./frontend
+    container_name: studai-frontend
+    ports:
+      - "5500:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
