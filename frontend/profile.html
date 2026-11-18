@@ -3,81 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyPilot AI - მომხმარებლის პროფილი</title>
+    <title>StudyPilot AI - User Profile</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="dashboard-body">
     <div id="header-placeholder"></div>
 
     <main class="profile-container">
-        <!-- შეტყობინებების ბლოკი -->
+        
         <div id="alertBox" class="alert"></div>
 
-        <!-- მომხმარებლის მთავარი ბარათი -->
         <section class="profile-header-card">
             <div class="avatar-circle" id="userAvatar">U</div>
             <div class="user-main-info">
-                <h1 id="displayName">იტვირთება...</h1>
+                <h1 id="displayName">Loading...</h1>
                 <p id="displayEmail" class="text-muted">---</p>
-                <span class="badge" id="userRole">სტუდენტი</span>
+                <span class="badge" id="userRole">Student</span>
             </div>
         </section>
 
-        <!-- სტატისტიკის ბარათები -->
         <section class="stats-grid">
             <div class="stat-card">
-                <span class="stat-label">შექმნილი ქვიზები</span>
+                <span class="stat-label">Created Quizzes</span>
                 <h2 class="stat-value" id="statQuizzes">0</h2>
             </div>
             <div class="stat-card">
-                <span class="stat-label">გავლილი ტესტები</span>
+                <span class="stat-label">Completed Tests</span>
                 <h2 class="stat-value" id="statMaterials">0</h2>
             </div>
             <div class="stat-card">
-                <span class="stat-label">საშუალო შედეგი</span>
+                <span class="stat-label">Average Score</span>
                 <h2 class="stat-value" id="statAvgScore">0%</h2>
             </div>
         </section>
 
-        <!-- ტესტების ისტორია -->
         <section class="dashboard-card">
-            <h2>ტესტების ისტორია</h2>
-            <div id="historyList"><p class="empty-text">იტვირთება...</p></div>
+            <h2>Test History</h2>
+            <div id="historyList"><p class="empty-text">Loading...</p></div>
         </section>
 
-        <!-- პროფილის რედაქტირების ფორმა -->
         <section class="dashboard-card" style="margin-bottom: 0;">
-            <h2>პროფილის რედაქტირება</h2>
-            <p class="section-desc">განაახლეთ თქვენი პირადი მონაცემები ან შეცვალეთ პაროლი.</p>
+            <h2>Profile Editing</h2>
+            <p class="section-desc">Update your personal information or change your password.</p>
             <form id="updateProfileForm">
                 <div class="form-group">
-                    <label for="usernameInput">სახელი / მომხმარებელი</label>
-                    <input type="text" id="usernameInput" class="form-control" required placeholder="შეიყვანეთ სახელი">
+                    <label for="usernameInput">Name / Username</label>
+                    <input type="text" id="usernameInput" class="form-control" required placeholder="Enter your name">
                 </div>
 
                 <div class="form-group">
-                    <label for="emailInput">ელ-ფოსტა</label>
+                    <label for="emailInput">Email</label>
                     <input type="email" id="emailInput" class="form-control" required placeholder="name@example.com">
                 </div>
 
                 <div class="form-group">
-                    <label for="passwordInput">ახალი პაროლი (არასავალდებულო)</label>
+                    <label for="passwordInput">New Password (Optional)</label>
                     <div class="password-wrapper">
-                        <input type="password" id="passwordInput" class="form-control" placeholder="დატოვეთ ცარიელი, თუ არ ცვლით">
+                        <input type="password" id="passwordInput" class="form-control" placeholder="Leave blank to keep current password">
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" id="saveBtn">ცვლილებების შენახვა</button>
+                <button type="submit" class="btn btn-primary" id="saveBtn">Save Changes</button>
             </form>
         </section>
 
-        <!-- საშიში ზონა (ანგარიშის წაშლა) -->
         <section class="danger-zone">
             <div>
-                <h3>ანგარიშის წაშლა</h3>
-                <p>ანგარიშის წაშლის შემდეგ ყველა ქვიზი და მასალა სამუდამოდ წაიშლება.</p>
+                <h3>Delete Account</h3>
+                <p>After deleting your account, all quizzes and materials will be permanently removed.</p>
             </div>
-            <button type="button" id="deleteAccountBtn" class="btn-danger">ანგარიშის წაშლა</button>
+            <button type="button" id="deleteAccountBtn" class="btn-danger">Delete Account</button>
         </section>
     </main>
 

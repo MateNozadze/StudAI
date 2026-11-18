@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ჩემი ქვიზები - StudyPilot AI</title>
+    <title>My Quizzes - StudyPilot AI</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="dashboard-body">
@@ -12,17 +12,16 @@
     <main class="container dashboard-main">
         <!-- ქვიზების სიის სექცია -->
         <div class="dashboard-card" id="quizzesListSection">
-            <h2>ჩემი გენერირებული ქვიზები</h2>
-            <p class="section-desc">აირჩიე ქვიზი სიიდან, რომ ნახო კითხვები და გაიარო ტესტი.</p>
+            <h2>My Generated Quizzes</h2>
+            <p class="section-desc">Select a quiz from the list to view questions and take the test.</p>
             <div id="quizzesContainer" class="quizzes-grid">
-                <p class="empty-text">ჯერ არ გაქვს გენერირებული ქვიზები.</p>
+                <p class="empty-text">You don't have any generated quizzes yet.</p>
             </div>
         </div>
 
-        <!-- კონკრეტული ქვიზის კითხვების ხედი (თავიდან დამალულია) -->
         <div class="dashboard-card" id="singleQuizView" style="display: none;">
-            <button type="button" id="backToListBtn" class="btn-outline" style="margin-bottom: 20px;">← უკან სივრცეში</button>
-            <h2 id="activeQuizTitle">ქვიზის სათაური</h2>
+            <button type="button" id="backToListBtn" class="btn-outline" style="margin-bottom: 20px;">← Back to List</button>
+            <h2 id="activeQuizTitle">Quiz Title</h2>
             <div id="activeQuizQuestions"></div>
         </div>
     </main>

@@ -4,15 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (heroButtons) {
         if (token) {
-            // თუ მომხმარებელი შესულია
             heroButtons.innerHTML = `
-                <a href="dashboard.html" class="btn-solid btn-lg">სამუშაო სივრცეში გადასვლა 🚀</a>
+                <a href="dashboard.html" class="btn-solid btn-lg">Go to Dashboard</a>
             `;
         } else {
-            // თუ სტუმარია
             heroButtons.innerHTML = `
-                <a href="register.html" class="btn-solid btn-lg">დაიწყე უფასოდ</a>
-                <a href="#features" class="btn-outline btn-lg">როგორ მუშაობს?</a>
+                <a href="register.html" class="btn-solid btn-lg">Get Started for Free</a>
+                <a href="#features" class="btn-outline btn-lg">How It Works?</a>
             `;
         }
     }

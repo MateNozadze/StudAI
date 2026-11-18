@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 from contextlib import contextmanager
 
 def get_ollama_host_port():
-    """OLLAMA_BASE_URL-იდან გამოაქვს host და port, რომ Docker-შიც სწორად შემოწმდეს"""
+    """Extracts the host and port from OLLAMA_BASE_URL so that the check also works correctly within Docker."""
     ollama_url = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
     parsed = urlparse(ollama_url)
     host = parsed.hostname or "127.0.0.1"
@@ -21,9 +21,10 @@ def is_port_open(host: str, port: int) -> bool:
 @contextmanager
 def temporary_ollama_server():
     host, port = get_ollama_host_port()
-    
-    # თუ ვართ Docker-ში (ანუ host არ არის ლოკალური მანქანა), 
-    # არ ვცდილობთ ollama-ს სერვერის თავად გაშვებას/ჩაქრობას (ის ჰოსტზეა მუშა მდგომარეობაში).
+
+    # If we are in Docker (i.e., the host is not the local machine),
+    # we do not attempt to start or stop the Ollama server ourselves (it is already running on the host).
+
     is_local = host in ("127.0.0.1", "localhost", "host.docker.internal")
     
     process = None
@@ -41,7 +42,6 @@ def temporary_ollama_server():
             )
             started_by_us = True
 
-            # ველოდებით მაქსიმუმ 30 წამი
             for _ in range(60):
                 if is_port_open(host, port):
                     break

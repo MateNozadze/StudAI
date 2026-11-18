@@ -8,14 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizForm = document.getElementById('quizForm');
     
     if (!quizForm) {
-        console.error("შეცდომა: #quizForm ელემენტი ვერ მოიძებნა HTML-ში!");
+        console.error("Error: #quizForm element not found in HTML!");
         return;
     }
 
     quizForm.addEventListener('submit', async (e) => {
-        // აუცილებლად აჩერებს გვერდის გადატვირთვას
         e.preventDefault(); 
-        console.log("ფორმის გაგზავნა დაიწყო...");
+        console.log("Quiz generation form submitted. Preparing to send request to backend...");
 
         const titleInput = document.getElementById('materialTitle');
         const countSelect = document.getElementById('questionCount');
@@ -27,18 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const text = textInput ? textInput.value.trim() : '';
 
         if (!title || !text) {
-            alert('გთხოვთ მიუთითოთ სათაური და ჩააკოპიროთ ტექსტი!');
+            alert('Please enter a title and paste the text!');
             return;
         }
 
         if (generateBtn) {
             generateBtn.disabled = true;
-            generateBtn.textContent = 'AI აანალიზებს და გენერირებს ქვიზს... ⏳';
+            generateBtn.textContent = 'Generating Quiz...';
         }
 
         try {
-            console.log("იგზავნება მოთხოვნა სერვერზე...", { title, count, text });
-            console.log("ლოკალურიდან წამოღებული ტოკენი:", token);
+            console.log("Preparing to send request to backend...", { title, count, text });
+            console.log("Retrieved token from local storage:", token);
             const response = await fetch('http://localhost:8080/api/quizzes/generate', {
                 method: 'POST',
                 headers: {
@@ -59,22 +58,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (!response.ok) {
-                throw new Error(`სერვერის შეცდომა: ${response.status}`);
+                throw new Error(`Server error: ${response.status}`);
             }
 
             const newQuizFromBackend = await response.json();
-            console.log("მიღებულია პასუხი სერვერიდან:", newQuizFromBackend);
+            console.log("Received response from backend:", newQuizFromBackend);
 
-            alert('ქვიზი წარმატებით დაგენერირდა!');
+            alert('Quiz generated successfully!');
             window.location.href = 'quizzes.html';
 
         } catch (error) {
-            console.error("გენერაციის შეცდომა:", error);
-            alert('ვერ მოხერხდა სერვერთან დაკავშირება. იხილე კონსოლი (F12).');
+            console.error("Generation error:", error);
+            alert('Failed to connect to the server. Please check the console (F12).');
         } finally {
             if (generateBtn) {
                 generateBtn.disabled = false;
-                generateBtn.textContent = 'ქვიზის გენერაცია 🚀';
+                generateBtn.textContent = 'Generate Quiz';
             }
         }
     });

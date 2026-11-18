@@ -29,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             String jwt = getJwtFromRequest(request);
-            System.out.println("Extracted JWT: " + jwt); // ვნახოთ მოდის თუ არა ტოკენი
+            System.out.println("Extracted JWT: " + jwt);
 
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 String email = tokenProvider.getUsernameFromJWT(jwt);

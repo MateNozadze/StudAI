@@ -22,7 +22,6 @@ services:
     ports:
       - "8000:8000"
     environment:
-      # კონტეინერიდან შენს კომპიუტერზე გაშვებულ Ollama-სთან წვდომა
       OLLAMA_BASE_URL: http://host.docker.internal:11434
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -38,12 +37,10 @@ services:
       ai-service:
         condition: service_started
     environment:
-      # Docker-ის შიდა ქსელში სერვისებს სახელებით მივმართავთ (db და ai-service)
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/studai_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       APP_JWT_SECRET: ${JWT_SECRET}
-      # თუ AIServiceImpl-ში URL კონფიგურირებადია, აქედან გადავაწვდით:
       AI_SERVICE_URL: http://ai-service:8000
 
   frontend:

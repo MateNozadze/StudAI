@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const list = document.getElementById('historyList');
         list.innerHTML = attempts.length === 0
-            ? '<p class="empty-text">ჯერ არცერთი ტესტი არ გაგივლია.</p>'
+            ? '<p class="empty-text">You have not taken any quizzes yet.</p>'
             : attempts.map(a => `
                 <div class="quiz-item-card">
                     <div class="quiz-card-content">
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <span class="quiz-badge">${a.score} / ${a.totalQuestions} (${Math.round(a.percentage)}%)</span>
                     </div>
                     <div class="quiz-card-actions">
-                        <button type="button" class="btn-solid btn-sm" onclick="location.href='take-quiz.html?id=${a.quizId}'">გახსნა →</button>
+                        <button type="button" class="btn-solid btn-sm" onclick="location.href='take-quiz.html?id=${a.quizId}'">open →</button>
                     </div>
                 </div>`).join('');
     } catch (e) {

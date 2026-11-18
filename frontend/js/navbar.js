@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
         const response = await fetch("components/header.html");
-        if (!response.ok) throw new Error("Header-ის ჩატვირთვა ვერ მოხერხდა");
+        if (!response.ok) throw new Error("could not load header.html");
         
         headerPlaceholder.innerHTML = await response.text();
 

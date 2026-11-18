@@ -16,7 +16,7 @@
     padding: 0;
 }
 
-/* ძირითადი ფონი (მოძრავი გრადიენტით, რომელიც გქონდა გაწერილი) */
+/* main frame */
 @keyframes smoothGradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -119,7 +119,7 @@ textarea.form-control {
     color: #334155;
 }
 
-/* ღილაკები */
+/* buttons */
 .btn {
     display: inline-block;
     width: 100%;

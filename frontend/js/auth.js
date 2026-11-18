@@ -18,7 +18,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
         localStorage.setItem('token', data.token);
         window.location.href = 'index.html';
     } else {
-        alert('არასწორი ელ-ფოსტა ან პაროლი');
+        alert('wrong email or password');
     }
 });
 
@@ -28,7 +28,7 @@ document.getElementById('registerForm')?.addEventListener('submit', async (e) =>
 
     const password = document.getElementById('password').value;
     if (password !== document.getElementById('confirmPassword').value) {
-        return alert('პაროლები არ ემთხვევა!');
+        return alert('Passwords do not match!');
     }
 
     const response = await fetch(`${API_URL}/register`, {
@@ -42,10 +42,10 @@ document.getElementById('registerForm')?.addEventListener('submit', async (e) =>
     });
 
     if (response.ok) {
-        alert('წარმატებით დარეგისტრირდით!');
+        alert('Registration successful!');
         window.location.href = 'login.html';
     } else {
-        alert('რეგისტრაცია ვერ მოხერხდა');
+        alert('Registration failed. Please try again.');
     }
 });
 

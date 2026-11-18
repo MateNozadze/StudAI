@@ -3,49 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>სამუშაო სივრცე - StudyPilot AI</title>
+    <title>Dashboard - StudyPilot AI</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="dashboard-body">
     <div id="header-placeholder"></div>
 
     <main class="container dashboard-main">
-        <!-- მასალის ატვირთვის სექცია -->
         <div class="dashboard-card" id="uploadSection">
-            <h2>სასწავლო მასალის ანალიზი და ქვიზი</h2>
-            <p class="section-desc">ჩააკოპირე კონსპექტი ან ატვირთე მასალა. AI შექმნის პერსონალიზებულ ტესტს, რომელიც შეინახება შენს სიაში.</p>
-            
+            <h2>Generate Quiz</h2>
+            <p class="section-desc">Copy a concept or upload material. AI will create a personalized test that will be saved in your list.</p>
+
             <form id="quizForm">
                 <div class="form-group">
-                    <label for="materialTitle">ქვიზის სათაური / თემა</label>
-                    <input type="text" id="materialTitle" class="form-control" placeholder="მაგ: მონაცემთა ბაზების ლექცია 1" required>
+                    <label for="materialTitle">Quiz Title / Topic</label>
+                    <input type="text" id="materialTitle" class="form-control" placeholder="e.g., Database Lecture 1" required>
                 </div>
                 <div class="form-group">
-                    <label for="questionCount">კითხვების რაოდენობა</label>
+                    <label for="questionCount">Number of Questions</label>
                     <select id="questionCount" class="form-control">
-                        <option value="1">1 კითხვა</option>
-                        <option value="2" selected>2 კითხვა</option>
-                        <option value="3">3 კითხვა</option>
-                        <option value="5">5 კითხვა</option>
+                        <option value="1">1 Question</option>
+                        <option value="2" selected>2 Questions</option>
+                        <option value="3">3 Questions</option>
+                        <option value="5">5 Questions</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="materialText">ლექციის ჩანაწერები ან ტექსტი</label>
-                    <textarea id="materialText" class="form-control" rows="5" placeholder="ჩააკოპირე სასწავლო მასალა აქ..." required></textarea>
+                    <label for="materialText">Lecture Notes or Text</label>
+                    <textarea id="materialText" class="form-control" rows="5" placeholder="Copy your study material here..." required></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="fileUpload">ან ატვირთე ფაილი (PDF / TXT)</label>
+                    <label for="fileUpload">Or Upload a File (PDF / TXT)</label>
                     <input type="file" id="fileUpload" class="form-control-file" accept=".pdf,.txt">
                 </div>
-                <button type="submit" id="generateBtn" class="btn-solid">ქვიზის გენერაცია 🚀</button>
+                <button type="submit" id="generateBtn" class="btn-solid">Generate Quiz</button>
             </form>
         </div>
 
-        <!-- სწრაფი გადასვლა ქვიზების სიაზე -->
         <div class="dashboard-card" style="text-align: center; padding: 24px;">
-            <h3 style="margin-bottom: 12px;">გაქვს უკვე შექმნილი ქვიზები?</h3>
-            <p class="section-desc">შეგიძლიათ გადახვიდეთ თქვენი ქვიზების სრული სიის გვერდზე და გაიაროთ ტესტები.</p>
-            <a href="quizzes.html" class="btn-solid" style="display: inline-block; max-width: 250px; text-decoration: none;">ქვიზების სიაზე გადასვლა</a>
+            <h3 style="margin-bottom: 12px;">Do you have any generated quizzes?</h3>
+            <p class="section-desc">You can navigate to your complete list of quizzes and take tests.</p>
+            <a href="quizzes.html" class="btn-solid" style="display: inline-block; max-width: 250px; text-decoration: none;">Go to Quiz List</a>
         </div>
     </main>
 
